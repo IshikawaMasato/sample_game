@@ -24,6 +24,29 @@ class MainScene extends Phaser.Scene {
     }
      // 毎フレーム実行される繰り返し処理
     update() {
-        
+        // キーボードの情報を取得
+        let cursors = this.input.keyboard.createCursorKeys();
+        if(cursors.up.isDown){
+            console.log("Up!!");
+            this.player1.setVelocityY(-40);// 上方向の速度を設定
+            this.player2.setVelocityY(40);// 上方向の速度を設定
+        } else if(cursors.down.isDown){
+            console.log("down!!");
+            this.player1.setVelocityY(40);// 下方向の速度を設定
+            this.player2.setVelocityY(-40);// 下方向の速度を設定
+        }else if(cursors.left.isDown){
+            console.log("Left");
+            this.player1.setVelocityX(-40);// 左方向の速度を設定
+            this.player2.setVelocityX(40);// 左方向の速度を設定
+        }else if(cursors.right.isDown){
+            console.log("Right!!");
+            this.player1.setVelocityX(40);// 右方向の速度を設定
+            this.player2.setVelocityX(-40);// 右方向の速度を設定
+        }else{
+            this.player1.setVelocityX(0);// 横方向の速度を0
+            this.player1.setVelocityY(0);// 縦方向の速度を0
+            this.player2.setVelocityX(0);// 横方向の速度を0
+            this.player2.setVelocityY(0);// 縦方向の速度を0
+        }
     }
 }
