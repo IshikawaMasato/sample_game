@@ -1,6 +1,6 @@
 // シーンクラス
 // 他のJSファイルから呼び出された場合はシーンを返す
-class MainScene extends Phaser.Scene {    
+class MainScene extends Phaser.Scene {
     // コンストラクタ
     constructor() {
         // 継承した「Phaser.Scene」クラスのコンストラクタの呼び出し
@@ -17,8 +17,6 @@ class MainScene extends Phaser.Scene {
         this.add.image(400, 300, 'background');
         }
      // 毎フレーム実行される繰り返し処理
-    update(time, delta) {
+    update() {
     }
-
 }
-
