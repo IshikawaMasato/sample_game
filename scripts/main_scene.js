@@ -1,11 +1,12 @@
 // シーンクラス
 // 他のJSファイルから呼び出された場合はシーンを返す
 class MainScene extends Phaser.Scene {
-    
+
     // コンストラクタ
     constructor() {
         // 継承した「Phaser.Scene」クラスのコンストラクタの呼び出し
         super('MainScene');
+        this.count=0; //取得したフルーツの数を数える変数
     }
 
     // シーンの事前読み込み処理
@@ -37,13 +38,15 @@ class MainScene extends Phaser.Scene {
 
         
 
-        this.physics.add.overlap(taro, staticGroup, collectf, null, this);
-        function collectf(){
-        this.physics.pause(this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' }));
+        this.physics.add.overlap(taro, staticGroup, collect1, null, this);
+        function collect1(){
+        // this.physics.pause(this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' }));
         }
-        this.physics.add.overlap(hanako, staticGroup, collectf, null, this);
-        function collectf(){
-        this.physics.pause(this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' }));
+        this.physics.add.overlap(hanako, staticGroup, collect2, null, this);
+        function collect2(hanako,furit){
+        this.count+=1;
+            furit.destroy();
+        // this.physics.pause(this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' }));
         }
         
         }
@@ -51,25 +54,30 @@ class MainScene extends Phaser.Scene {
 
      // 毎フレーム実行される繰り返し処理
     update() {
+        //フルーツを10個取ったらゲームを終了する
+        if(this.count >= 10){
+            this.physics.pause(this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Clear!', { fontSize: '32px', fill: '#CDC' }));
+        }
+
         // キーボードの情報を取得
         let cursors = this.input.keyboard.createCursorKeys();
 
         if(cursors.up.isDown){
             console.log("Up!!");
-            this.taro.setVelocityY(-40);// 上方向の速度を設定
-            this.hanako.setVelocityY(40);// 上方向の速度を設定
+            this.taro.setVelocityY(-80);// 上方向の速度を設定
+            this.hanako.setVelocityY(80);// 上方向の速度を設定
         } else if(cursors.down.isDown){
             console.log("down!!");
-            this.taro.setVelocityY(40);// 下方向の速度を設定
-            this.hanako.setVelocityY(-40);// 下方向の速度を設定
+            this.taro.setVelocityY(80);// 下方向の速度を設定
+            this.hanako.setVelocityY(-80);// 下方向の速度を設定
         }else if(cursors.left.isDown){
             console.log("Left");
-            this.taro.setVelocityX(-40);// 左方向の速度を設定
-            this.hanako.setVelocityX(40);// 左方向の速度を設定
+            this.taro.setVelocityX(-80);// 左方向の速度を設定
+            this.hanako.setVelocityX(80);// 左方向の速度を設定
         }else if(cursors.right.isDown){
             console.log("Right!!");
-            this.taro.setVelocityX(40);// 右方向の速度を設定
-            this.hanako.setVelocityX(-40);// 右方向の速度を設定
+            this.taro.setVelocityX(80);// 右方向の速度を設定
+            this.hanako.setVelocityX(-80);// 右方向の速度を設定
         }else{
             this.taro.setVelocityX(0);// 横方向の速度を0
             this.taro.setVelocityY(0);// 縦方向の速度を0
