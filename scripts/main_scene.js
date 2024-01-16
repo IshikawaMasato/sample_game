@@ -20,26 +20,34 @@ class MainScene extends Phaser.Scene {
 
     // シーン初期化処理
     create() {
-         // 単体画像をシーンに追加(X座標,Y座標,画像名)
         this.add.image(400, 300, 'background');
-        const taro = this.physics.add.sprite(50, 50, 'taro');
-        const hanako = this.physics.add.sprite(750, 400, 'hanako');
-        this.taro = taro;
-        this.hanako = hanako;
-        for(let i = 0; i < 5; i++){
-            this.rand_orange_function();
-            this.rand_apple_function();
+        const taro = this.physics.add.sprite(50, 50, 'taro')
+        const hanako = this.physics.add.sprite(750, 400, 'hanako')
+        let staticGroup = this.physics.add.staticGroup();
+        for(let i=0; i<5; i++){
+        let  randx = Phaser.Math.Between(25, 775) ;  // y は　50～750の間の値
+        let randy =  Phaser.Math.Between(25, 425) ;  // y は　50～200の間の値
+        staticGroup.create(randx, randy , 'orange'); }//ランダムな場所に生成
+        for(let i=0; i<5; i++){
+        let  randa = Phaser.Math.Between(25, 775) ;  // y は　50～750の間の値
+        let randb =  Phaser.Math.Between(25, 425) ;  // y は　50～200の間の値
+        staticGroup.create(randa, randb , 'apple');} //ランダムな場所に生成
+        this.taro = taro
+        this.hanako = hanako
+
+        
+
+        this.physics.add.overlap(taro, staticGroup, collectf, null, this);
+        function collectf(){
+        this.physics.pause(this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' }));
+        }
+        this.physics.add.overlap(hanako, staticGroup, collectf, null, this);
+        function collectf(){
+        this.physics.pause(this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' }));
         }
         
-        let staticGroup = this.physics.add.staticGroup();
-        staticGroup.create('orange');
-        staticGroup.create('apple');
-
-        this.physics.add.collider(taro, staticGroup);
-
-        this.physics.add.overlap(player1, this.staticGroup, this.collectApple, null, this);
-        
-    }
+        }
+    
 
      // 毎フレーム実行される繰り返し処理
     update() {
