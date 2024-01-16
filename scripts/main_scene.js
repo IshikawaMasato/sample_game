@@ -30,6 +30,15 @@ class MainScene extends Phaser.Scene {
             this.rand_orange_function();
             this.rand_apple_function();
         }
+        
+        let staticGroup = this.physics.add.staticGroup();
+        staticGroup.create('orange');
+        staticGroup.create('apple');
+
+        this.physics.add.collider(taro, staticGroup);
+
+        this.physics.add.overlap(player1, this.staticGroup, this.collectApple, null, this);
+        
     }
 
      // 毎フレーム実行される繰り返し処理
